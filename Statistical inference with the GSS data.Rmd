@@ -1,10 +1,11 @@
 ---
 title: "Statistical inference with the GSS data"
-output: 
-  html_document: 
+output:
+  html_document:
     fig_height: 4
     highlight: pygments
     theme: spacelab
+  pdf_document: default
 ---
 
 ## Setup
@@ -87,7 +88,7 @@ gss %>%
   degree_vs_race
 dim(degree_vs_race)
 ```
-
+\newpage
 ### exploring the research variables degree and race:
 
 we will take a look at summary statistics for each variable:
@@ -100,27 +101,33 @@ kable(unique(degree_vs_race$race),
        align = 'c')
 ```
 
+
 We can see that the categorical variable race can take one one of three values: White, Black and Other which groups all the other racial groups other than White and Black.
 
 summary statistics: 
--Counts:
+
+* Counts:
 
 ```{r}
 kable(table(degree_vs_race$race),
        align = 'c')
 ```
+
+
 Here is the distribution of counts for the race variable, counts are useful, but proportions give us more insight into the distribution.
 
 
--Distribution of proportions:
+* Distribution of proportions:
 ```{r}
 kable( round( prop.table(table(degree_vs_race$race))*100, 2),
        align = 'c')
 ```
+
+
 we can clearly see that most respondents are White, with 81.36%, then Black 13.77 and last Other with 4.88%.
 
 
--Plotting the distribution
+* Plotting the distribution
 ```{r}
 ggplot(degree_vs_race) +
   geom_bar(aes( x= race, y =  (..count..)/sum(..count..)), fill = 'lightcoral') + 
@@ -134,24 +141,30 @@ When plotting the distribution of proportions we can observe the distribution cl
 Degree:
 
 the values taken by the variable:
+
 ```{r}
 kable(unique(degree_vs_race$degree),
        align = 'c')
 
 ```
 
+
+
 There are five categories, lt High School(lt for less than), High School, Junior College, Bachelor and Graduate
 
 summary statistics: 
--Counts:
+
+* Counts:
 
 ```{r}
 kable(table(degree_vs_race$degree),
        align = 'c')
 ```
+
+
 We can see that most people finish high school, followed by those who don't, to see the difference clearly let's see the proportions.
 
--Distribution of proportions:
+* Distribution of proportions:
 
 ```{r}
 kable( round( prop.table(table(degree_vs_race$degree))*100, 2),
@@ -160,7 +173,7 @@ kable( round( prop.table(table(degree_vs_race$degree))*100, 2),
 we can see that half the sample have finished high school, followed by 21% who don't then Bachelor's Degree holders, and finally Graduates and Juniors in College
 
 
--Plotting the distribution:
+* Plotting the distribution:
 
 ```{r}
 ggplot(degree_vs_race) +
@@ -168,6 +181,7 @@ ggplot(degree_vs_race) +
   theme_linedraw() +
   labs(y = "Proportion")
 ```
+
 The plot illustrate the difference in the distribution of the degree variable.
 
 
@@ -176,11 +190,13 @@ The plot illustrate the difference in the distribution of the degree variable.
 Now Let's dig deeper and get a closer look to the relationship between degree and race from an Exploratory Data Analysis point of view.
 
 
-Proportions:
+* Proportions:
 ```{r}
 kable( round( prop.table(table(degree_vs_race$degree, degree_vs_race$race), margin = 2)*100, 2),
        align = 'c')
 ```
+
+
 The proportions table, summarizes the distribution of degrees inside each race category, we can't see the difference clearly, so let's plot this data to gain more insight.
 
 
@@ -192,6 +208,7 @@ ggplot(data = degree_vs_race) +
   theme_linedraw() + 
   scale_fill_brewer(palette = 'Set1') 
 ```
+
 
 We can see that in this sample, there is a difference between the Black category and other race categories(White and Other),
 Black has more less than High school observations, and less graduate and bachelor observations.
@@ -240,11 +257,13 @@ degree_vs_race_table <- table(degree_vs_race$race, degree_vs_race $degree)
 kable(degree_vs_race_table)
 ```
 
+
 Let us perform the Chi-Square test:
 ```{r}
 Chi_square <- chisq.test(degree_vs_race_table) 
 Chi_square
 ```
+
 let's see a way to visualize the result of this test:
 
 ```{r}
